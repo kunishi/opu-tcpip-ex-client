@@ -23,7 +23,7 @@ int main(void)
   char buf[1024];
 
   if ((s = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
-    perror("socket");
+    fprintf(stderr, "error: socket\n");
     exit(1);
   }
 
@@ -34,7 +34,7 @@ int main(void)
 
   fprintf(stderr, "Connecting to the server...\n");
   if (connect(s, (struct sockaddr *)&sa, sizeof(sa)) == -1) {
-    perror("connect");
+    fprintf(stderr, "error: connect\n");
     exit(1);
   }
   fprintf(stderr, "Connected.\n");
@@ -44,18 +44,18 @@ int main(void)
     write(1, buf, cc); /* 1: stdout */
   }
   if (cc == -1) {
-    perror("read");
+    fprintf(stderr, "error: read\n");
     exit(1);
   }
   fprintf(stderr, "\n\nFinished receiving.\n");
 
   if (shutdown(s, SHUT_RDWR) == -1) {
-    perror("shutdown");
+    fprintf(stderr, "error: shutdown\n");
     exit(1);
   }
 
   if (close(s) == -1) {
-    perror("close");
+    fprintf(stderr, "error: close\n");
     exit(1);
   }
 
